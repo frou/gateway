@@ -78,9 +78,10 @@ func setupHandlers(execPaths []string) {
 	defer mappingWriter.Flush()
 	for _, execPath := range execPaths {
 		cgiHandler := &cgi.Handler{
-			Path: execPath,
-			Dir:  ".",
-			Env:  childEnv,
+			Path:                execPath,
+			Dir:                 ".",
+			Env:                 childEnv,
+			PathLocationHandler: http.DefaultServeMux,
 		}
 		resource := rootResource
 		execName := filepath.Base(execPath)

@@ -1,6 +1,5 @@
-`$ gateway -help`
-
 ```text
+$ gateway -help
 gateway is a basic dynamic webserver that delegates handling of HTTP requests 
 to executables on disk using the Common Gateway Interface (CGI).
 
