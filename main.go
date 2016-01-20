@@ -7,6 +7,7 @@ import (
 	"net/http/cgi"
 	"os"
 	"path/filepath"
+	"strings"
 	"text/tabwriter"
 
 	"github.com/frou/stdext"
@@ -20,15 +21,19 @@ const (
 )
 
 var (
-	port = flag.Int("port", 80, "tcp port number on which to listen for "+
-		"connections")
+	port = flag.Int("port", 80,
+		"tcp port number on which to listen for connections")
 
-	copyEnv = flag.Bool("copyenv", false, "include a copy of the server's "+
-		"own environment variables")
+	copyEnv = flag.Bool("copyenv", false,
+		"child processes get a copy of the server's environment variables")
 
-	wildcard = flag.Bool("wildcard", false, "have "+rootResourceExecName+
-		" perform double-duty and also handle any HTTP resource that isn't "+
-		"otherwise handled")
+	withEnv = flag.String("withenv", "",
+		"child processes get exactly these environment variables, "+
+			"specified in the form k0=v0,k1=v1,...")
+
+	wildcard = flag.Bool("wildcard", false,
+		"have "+rootResourceExecName+" perform double-duty and also handle "+
+			"any HTTP resource that isn't otherwise handled")
 
 	mappingWriter = tabwriter.NewWriter(os.Stderr, 0, 8, 1, ' ', 0)
 )
@@ -72,7 +77,11 @@ func findExecPaths(dir string) ([]string, error) {
 
 func setupHandlers(execPaths []string) {
 	var childEnv []string
-	if *copyEnv {
+	if *withEnv != "" {
+		for _, kvp := range strings.Split(*withEnv, ",") {
+			childEnv = append(childEnv, kvp)
+		}
+	} else if *copyEnv {
 		childEnv = os.Environ()
 	}
 	defer mappingWriter.Flush()
