@@ -132,4 +132,6 @@ An executable handles a request by writing HTTP headers (Status, Content-Type,
 ...) followed by some content (likely HTML) to standard output, and then
 exiting. CGI information is conveyed to executables using environment
 variables with standard names - see http://www.cgi101.com/book/ch3/text.html
+
+Go's standard library does the heavy-lifting.
 `, os.Args[0], rootResourceExecName)
