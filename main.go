@@ -119,6 +119,8 @@ func printMapping(resource, execPath string) {
 	fmt.Fprintf(mappingWriter, "%s\t->\t%s\n", resource, execPath)
 }
 
+// TODO: Don't have this weird embedded readme in the code or a copy-pasted
+// invocation into the readme file.
 var desc = fmt.Sprintf(`
 %s is a basic dynamic webserver that delegates handling of HTTP requests to
 executables on disk using the Common Gateway Interface (CGI).
