@@ -39,7 +39,7 @@ var (
 )
 
 func main() {
-	stdext.SetPreFlagsUsageMessage(desc, "/path/to/executables/dir")
+	stdext.SetPreFlagsUsageMessage(desc, true, "/path/to/executables/dir")
 	if err := stdext.ParseFlagsExpectingNArgs(1); err != nil {
 		stdext.Exit(err)
 	}
