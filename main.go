@@ -86,6 +86,11 @@ func setupHandlers(execPaths []string) {
 	}
 	defer mappingWriter.Flush()
 	for _, execPath := range execPaths {
+		// TODO(DH): Can this Go 1.7 change be made use of?
+		// """
+		// The Handler adds a new field Stderr that allows redirection of the child
+		// process's standard error away from the host process's standard error.
+		// """
 		cgiHandler := &cgi.Handler{
 			Path: execPath,
 			Dir:  ".",
